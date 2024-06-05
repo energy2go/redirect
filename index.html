@@ -4,13 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Redirect</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        h1, p {
+            text-align: center;
+        }
+
+        div {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>QR Code Redirect Page</h1>
-    <p id="message">Redirecionando...</p>
+    <div>
+        <h1>QR Code Redirect Page</h1>
+        <p id="message">Redirecionando em <span id="countdown">3</span> segundos...</p>
+    </div>
 
     <script>
-        // URL configurável para redirecionamento
         const redirectBaseURL = "https://m.energy2go.com.br";
 
         function getQueryParam(param) {
@@ -20,14 +40,34 @@
 
         function redirectToUrl() {
             const qrCode = getQueryParam('qrCode');
+            const countdownElement = document.getElementById('countdown');
+            let countdown = 3;
+
             if (qrCode) {
-                const redirectURL = `${redirectBaseURL}?qr=${qrCode}`;
-                window.location.href = redirectURL;
+                const redirectURL = `${redirectBaseURL}?qrCode=${qrCode}`;
+                
+                const interval = setInterval(() => {
+                    countdown--;
+                    countdownElement.innerText = countdown;
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectURL;
+                    }
+                }, 1000);
+
             } else {
-                document.getElementById('message').innerText = "Nenhum qrCode fornecido. Redirecionando para URL padrão...";
-                window.location.href = redirectBaseURL;
+                const interval = setInterval(() => {
+                    countdown--;
+                    countdownElement.innerText = countdown;
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        document.getElementById('message').innerText = "Nenhum qrCode fornecido. Redirecionando para URL padrão...";
+                        window.location.href = redirectBaseURL;
+                    }
+                }, 1000);
             }
         }
+
         redirectToUrl();
     </script>
 </body>
