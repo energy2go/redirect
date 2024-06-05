@@ -39,12 +39,12 @@
         }
 
         function redirectToUrl() {
-            const qrCode = getQueryParam('qrCode');
+            const qrCode = getQueryParam('token');
             const countdownElement = document.getElementById('countdown');
             let countdown = 3;
 
             if (qrCode) {
-                const redirectURL = `${redirectBaseURL}?qrCode=${qrCode}`;
+                const redirectURL = `${redirectBaseURL}/qr/${qrCode}`;
                 
                 const interval = setInterval(() => {
                     countdown--;
