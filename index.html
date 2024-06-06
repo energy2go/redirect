@@ -26,7 +26,6 @@
 </head>
 <body>
     <div>
-        <h1>QR Code Redirect Page</h1>
         <p id="message">Redirecionando em <span id="countdown">3</span> segundos...</p>
     </div>
 
@@ -41,7 +40,7 @@
         function redirectToUrl() {
             const qrCode = getQueryParam('token');
             const countdownElement = document.getElementById('countdown');
-            let countdown = 3;
+            let countdown = 1;
 
             if (qrCode) {
                 const redirectURL = `${redirectBaseURL}/qr/${qrCode}`;
